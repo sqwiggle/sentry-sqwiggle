@@ -56,15 +56,15 @@ class SqwiggleMessage(notify.NotificationPlugin):
         culprit = getattr(group, 'title', group.culprit).encode('utf-8')
 
         if message == culprit:
-        culprit = ''
+            culprit = ''
 
         payload = {
-        'project_name': project_name,
-        'project_url': project_url,
-        'team_name': team_name,
-        'event_type': event_type,
-        'error_message': message,
-        'error_culprit': culprit,
+            'project_name': project_name,
+            'project_url': project_url,
+            'team_name': team_name,
+            'event_type': event_type,
+            'error_message': message,
+            'error_culprit': culprit,
         }
 
         request = urllib2.Request(webhook)
@@ -73,10 +73,10 @@ class SqwiggleMessage(notify.NotificationPlugin):
         request.add_header('User-Agent', 'sentry-sqwiggle/%s' % (self.version))
 
         try:
-        return urllib2.urlopen(request, json.dumps({'payload': payload})).read() 
+            return urllib2.urlopen(request, json.dumps({'payload': payload})).read() 
         except urllib2.URLError:
-        self.logger.error('Error connecting to Sqwiggle.', exc_info=True)
-        raise
+            self.logger.error('Error connecting to Sqwiggle.', exc_info=True)
+            raise
         except urllib2.HTTPError as e:
-        self.logger.error('Error posting to Sqwiggle: %s', e.read(), exc_info=True)
-        raise
+            self.logger.error('Error posting to Sqwiggle: %s', e.read(), exc_info=True)
+            raise
